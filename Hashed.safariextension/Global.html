@@ -1,42 +1,55 @@
 <!DOCTYPE HTML>
+
+<!--
+Copyright (c) 2011, Nathaniel Nutter
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+Neither the name of the Nathaniel Nutter nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
 <html>
-<head>
-	<title>Global</title>
-	<script src="PwdHash/md5.js" type="text/javascript"></script>
-	<script src="PwdHash/hashed-password.js" type="text/javascript"></script>
-	<script src="PwdHash/domain-extractor.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		function generatePwdHash(event) {
-			if (event.command === "generatepwdhash") {
-				var URL = event.target.browserWindow.activeTab.url;
-				if (!URL) return;
-				
-				var masterPassword = safari.extension.secureSettings.masterPassword;			
-				if (!masterPassword) {
-					event.target.browserWindow.activeTab.page.dispatchMessage("missingMasterPassword");
-					return;
-				}
-				
-				var domain = (new SPH_DomainExtractor()).extractDomain(URL);
-				if (!domain) return;
-	
-				var result = new String(new SPH_HashedPassword(masterPassword, domain));
-				if (!result) return;
-				
-				event.target.browserWindow.activeTab.page.dispatchMessage("pwdHash", result.valueOf());
-				//event.target.browserWindow.activeTab.url = domain + '-' + result;
-			}
-		}
-		function canGeneratePwdHash(event) {
-			if (event.command === "generatepwdhash") {
-				var URL = event.target.browserWindow.activeTab.url;
-				var masterPassword = safari.extension.settings.masterPassword;
-				event.target.disabled = false;
-			}
-		}
-		safari.application.addEventListener("command", generatePwdHash, false);
-		safari.application.addEventListener("validate", canGeneratePwdHash, false);
-	</script>
+    <head>
+        <title>Global</title>
+        <script src="PwdHash/md5.js" type="text/javascript"></script>
+        <script src="PwdHash/hashed-password.js" type="text/javascript"></script>
+        <script src="PwdHash/domain-extractor.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            function generatePwdHash(event) {
+                if (event.command === "generatepwdhash") {
+                    var URL = event.target.browserWindow.activeTab.url;
+                    if (!URL) return;
+
+                    var masterPassword = safari.extension.secureSettings.masterPassword;			
+                    if (!masterPassword) {
+                        event.target.browserWindow.activeTab.page.dispatchMessage("missingMasterPassword");
+                        return;
+                    }
+
+                    var domain = (new SPH_DomainExtractor()).extractDomain(URL);
+                    if (!domain) return;
+
+                    var result = new String(new SPH_HashedPassword(masterPassword, domain));
+                    if (!result) return;
+
+                    event.target.browserWindow.activeTab.page.dispatchMessage("pwdHash", result.valueOf());
+                    //event.target.browserWindow.activeTab.url = domain + '-' + result;
+                }
+            }
+function canGeneratePwdHash(event) {
+    if (event.command === "generatepwdhash") {
+        var URL = event.target.browserWindow.activeTab.url;
+        var masterPassword = safari.extension.settings.masterPassword;
+        event.target.disabled = false;
+    }
+}
+safari.application.addEventListener("command", generatePwdHash, false);
+safari.application.addEventListener("validate", canGeneratePwdHash, false);
+</script>
 </head>
 <body>
 </body>
