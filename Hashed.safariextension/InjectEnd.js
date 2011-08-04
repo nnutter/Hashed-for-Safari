@@ -40,5 +40,14 @@ if (window.top === window) {
         alert("You must set a Master Password in Hashed for Safari's extension settings.");
     }
 
+
+    function handleKeyboardShortcut(event) {
+        if (event && event.metaKey && event.keyCode == 92) {
+            safari.self.tab.dispatchMessage("pleaseGeneratePwdHash");
+        }
+    }
+
+    document.onkeypress = handleKeyboardShortcut;
+
     safari.self.addEventListener("message", receivePwdHash, false);
 }
