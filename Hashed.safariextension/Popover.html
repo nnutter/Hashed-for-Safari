@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hashed</title>
+    <script language="JavaScript">
+        function handleKeyPress(event, form) {
+            var key = event.keyCode || event.which;
+            if (key == 13) {
+                testResults(form);
+            }
+        }
+        function testResults(form) {
+            var password = form.password.value;
+            alert("Your password: " + password);
+        }
+    </script>
+</head>
+<body>
+    <form name="password" action="" method="get">
+        <input type="text" name="password" value="" onKeyPress="handleKeyPress(event, this.form)" />
+    </form>
+</body>
+</html>
