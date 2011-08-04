@@ -4,16 +4,18 @@
 <dict>
 	<key>Author</key>
 	<string>Nathaniel Nutter</string>
+	<key>Builder Version</key>
+	<string>7534.48.3</string>
 	<key>CFBundleDisplayName</key>
 	<string>Hashed</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.nnutter.hashed.safari</string>
+	<string>com.hashedapp.safari</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1</string>
+	<string>0.2</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Global Page</key>
@@ -58,6 +60,8 @@
 			<string>All</string>
 		</dict>
 	</dict>
+	<key>Update Manifest URL</key>
+	<string>http://hashedapp.com/safari/update</string>
 	<key>Website</key>
 	<string>http://hashedapp.com</string>
 </dict>
