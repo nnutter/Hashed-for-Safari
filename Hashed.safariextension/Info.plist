@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Author</key>
-	<string>Nathaniel Nutter</string>
+	<string>nnutter</string>
 	<key>Builder Version</key>
 	<string>7534.48.3</string>
 	<key>CFBundleDisplayName</key>
@@ -13,26 +13,13 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.3</string>
+	<string>0.4</string>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>4</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Global Page</key>
 		<string>Global.html</string>
-		<key>Popovers</key>
-		<array>
-			<dict>
-				<key>Filename</key>
-				<string>Popover.html</string>
-				<key>Height</key>
-				<real>100</real>
-				<key>Identifier</key>
-				<string>hashedPopover</string>
-				<key>Width</key>
-				<real>200</real>
-			</dict>
-		</array>
 		<key>Toolbar Items</key>
 		<array>
 			<dict>
@@ -48,18 +35,6 @@
 				<string></string>
 				<key>Tool Tip</key>
 				<string>Hashed for Safari</string>
-			</dict>
-			<dict>
-				<key>Identifier</key>
-				<string>hashedPopoverButton</string>
-				<key>Image</key>
-				<string>Icon.png</string>
-				<key>Label</key>
-				<string>Hashed Popover</string>
-				<key>Popover</key>
-				<string>hashedPopover</string>
-				<key>Tool Tip</key>
-				<string>Popover</string>
 			</dict>
 		</array>
 	</dict>
@@ -78,7 +53,7 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>Hashed for Safari</string>
+	<string>PwdHash.com compatible password generator for Safari.</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>

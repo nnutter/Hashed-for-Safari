@@ -10,6 +10,8 @@
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    */
 
+var pwdHash;
+
 if (window.top === window) {
     function findPasswordFields() {
         var passwordFields = new Array();
@@ -24,15 +26,27 @@ if (window.top === window) {
     }
 
     function receivePwdHash(msgEvent) {
-        if (msgEvent.name === "pwdHash") {
-            var passwordFields = findPasswordFields();
-            for (var e = 0; e < passwordFields.length; e++) {
-                passwordFields[e].value = msgEvent.message;
-                passwordFields[e].style.backgroundColor = "#ffffe0";
+        var msgName = msgEvent.name;
+        var msgData = msgEvent.message;
+        var autoFill = msgData[0];
+        var password = msgData[1];
+        if (msgName === "pwdHash") {
+            pwdHash = password;
+            if (autoFill) {
+                var passwordFields = findPasswordFields();
+                for (var e = 0; e < passwordFields.length; e++) {
+                    if (!passwordFields[e].value) {
+                        passwordFields[e].value = password;
+                        passwordFields[e].style.backgroundColor = "#ffffe0";
+                    }
+                }
             }
         }
         else if (msgEvent.name === "missingMasterPassword") {
             alertMissingMasterPassword(msgEvent);
+        }
+        else if (msgEvent.name === "missingAltMasterPassword") {
+            alertMissingAltMasterPassword(msgEvent);
         }
     }
 
@@ -40,14 +54,37 @@ if (window.top === window) {
         alert("You must set a Master Password in Hashed for Safari's extension settings.");
     }
 
+    function alertMissingAltMasterPassword(msgEvent) {
+        alert("You must set an Alternate Master Password in Hashed for Safari's extension settings.");
+    }
+
+    function handleClick(event) {
+        var element = document.activeElement;
+        if (element.type == 'password' && pwdHash) {
+            element.value = pwdHash;
+        }
+    }
 
     function handleKeyboardShortcut(event) {
-        if (event && event.metaKey && event.keyCode == 92) {
-            safari.self.tab.dispatchMessage("pleaseGeneratePwdHash");
+        if (event && event.metaKey && !event.shiftKey && !event.altKey && !event.ctrlKey && event.keyCode == 92) {
+            safari.self.tab.dispatchMessage("pleaseGeneratePwdHash", true);
+        }
+        if (event && event.metaKey && !event.shiftKey && !event.altKey && !event.ctrlKey && event.keyCode == 39) {
+            safari.self.tab.dispatchMessage("pleaseGeneratePwdHash", true);
+        }
+        if (event && event.metaKey && !event.shiftKey &&  event.altKey && !event.ctrlKey && event.keyCode == 230) {
+            safari.self.tab.dispatchMessage("pleaseGeneratePwdHash", false);
+        }
+        if (event && event.metaKey && !event.shiftKey && !event.altKey && !event.ctrlKey && event.keyCode == 59) {
+            safari.self.tab.dispatchMessage("pleaseGenerateAltPwdHash", true);
+        }
+        if (event && event.metaKey && !event.shiftKey &&  event.altKey && !event.ctrlKey && event.keyCode == 8230) {
+            safari.self.tab.dispatchMessage("pleaseGenerateAltPwdHash", false);
         }
     }
 
     document.onkeypress = handleKeyboardShortcut;
+    document.onclick = handleClick;
 
     safari.self.addEventListener("message", receivePwdHash, false);
 }

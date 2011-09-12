@@ -10,7 +10,19 @@
 		<key>Secure</key>
 		<true/>
 		<key>Title</key>
-		<string>Master Password</string>
+		<string>Primary Master Password (⌘\ or ⌘')</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>altMasterPassword</string>
+		<key>Password</key>
+		<true/>
+		<key>Secure</key>
+		<true/>
+		<key>Title</key>
+		<string>Alternate Master Password (⌘;)</string>
 		<key>Type</key>
 		<string>TextField</string>
 	</dict>
