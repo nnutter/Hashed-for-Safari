@@ -21,6 +21,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <script type="text/javascript">
             function generatePwdHashFromMasterPassword(event, masterPassword) {
                 var autoFill = event.message;
+                if (event.command === "generatepwdhash") {
+                    autoFill = true;
+                }
 
                 var URL = event.target.browserWindow.activeTab.url;
                 if (!URL) { return; }
