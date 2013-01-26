@@ -26,6 +26,16 @@ if (window.top === window) {
     }
 
     function receivePwdHash(msgEvent) {
+        if (msgEvent.name === "missingMasterPassword") {
+            alertMissingMasterPassword(msgEvent);
+            return;
+        }
+ 
+        if (msgEvent.name === "missingAltMasterPassword") {
+            alertMissingAltMasterPassword(msgEvent);
+        }
+
+    
         var msgName = msgEvent.name;
         var msgData = msgEvent.message;
         var autoFill = msgData[0];
@@ -41,12 +51,6 @@ if (window.top === window) {
                     }
                 }
             }
-        }
-        else if (msgEvent.name === "missingMasterPassword") {
-            alertMissingMasterPassword(msgEvent);
-        }
-        else if (msgEvent.name === "missingAltMasterPassword") {
-            alertMissingAltMasterPassword(msgEvent);
         }
     }
 
