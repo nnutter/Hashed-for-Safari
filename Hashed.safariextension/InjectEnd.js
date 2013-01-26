@@ -81,6 +81,15 @@ if (window.top === window) {
         if (event && event.metaKey && !event.shiftKey &&  event.altKey && !event.ctrlKey && event.keyCode == 8230) {
             safari.self.tab.dispatchMessage("pleaseGenerateAltPwdHash", false);
         }
+        
+        /* german keyboard */
+        if (event && event.metaKey && !event.shiftKey && !event.altKey && !event.ctrlKey && event.keyCode == 35) {
+            safari.self.tab.dispatchMessage("pleaseGeneratePwdHash", true);
+        }
+        if (event && event.metaKey && !event.shiftKey &&  event.altKey && !event.ctrlKey && event.keyCode == 8216) {
+            safari.self.tab.dispatchMessage("pleaseGeneratePwdHash", false);
+        }
+        
     }
 
     document.onkeypress = handleKeyboardShortcut;
